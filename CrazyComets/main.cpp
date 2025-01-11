@@ -7,7 +7,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 Renderer* renderer = new Renderer();
 
 // controls
-bool shouldClear = false;
+bool shouldClear = true;
 int cometCount = 10;
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
