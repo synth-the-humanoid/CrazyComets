@@ -1,6 +1,8 @@
 #ifndef COMET_H
 #define COMET_H
 #include "renderer.h"
+#include "cometconf.h"
+
 
 class Comet
 {

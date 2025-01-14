@@ -56,11 +56,11 @@ void Comet::Update(int milliSecondsSinceLast)
 	D2D1_SIZE_U size = renderer->GetSize();
 	if (x > size.width || x < 0)
 	{
-		xVel *= -1.01;
+		xVel *= -1;
 	}
 	if (y > size.height || y < 0)
 	{
-		yVel *= -1.01;
+		yVel *= -1;
 	}
 	float deltaTime = 1 + (1 / max(milliSecondsSinceLast, 1));
 	x += (xVel * deltaTime);
@@ -141,6 +141,8 @@ void UpdateComets()
 	lastUpdate = currentTick;
 	for (int i = 0; comets[i]; i++)
 	{
+		comets[i]->xVel = min(comets[i]->xVel, maxSpeed);
+		comets[i]->yVel = min(comets[i]->yVel, maxSpeed);
 		comets[i]->Update(delay);
 	}
 }
@@ -161,20 +163,22 @@ void HandleCollisions()
 	{
 		for (int i2 = 0; comets[i2]; i2++)
 		{
-			if (i != i2)
-			{
-				if (comets[i]->Distance(comets[i2]) <= comets[i]->rad + comets[i2]->rad)
-				{
-					comets[i]->xVel *= -1;
-					comets[i]->yVel *= -1;
-					comets[i]->x += comets[i]->xVel;
-					comets[i]->y += comets[i]->yVel;
-					comets[i2]->xVel *= -1;
-					comets[i2]->yVel *= -1;
-					comets[i2]->x += comets[i2]->xVel;
-					comets[i2]->y += comets[i2]->yVel;
-				}
-			}
+			if (i == i2 || comets[i]->Distance(comets[i2]) > comets[i]->rad + comets[i2]->rad) continue;
+			// store velocity change from first comet before we change it to impact the second
+			// yes i could use the additive property trick but we're just chilling
+			float xVelI2 = comets[i]->xVel / dampenRate;
+			float yVelI2 = comets[i]->yVel / dampenRate;
+			// apply velocity to first comet
+			comets[i]->xVel += comets[i2]->xVel / dampenRate;
+			comets[i]->yVel += comets[i2]->yVel / dampenRate;
+			// apply velocity change to second comet
+			comets[i2]->xVel += xVelI2 / dampenRate;
+			comets[i2]->yVel += xVelI2 / dampenRate;
+			// apply velocity to position
+			comets[i]->x += comets[i]->xVel;
+			comets[i]->y += comets[i]->yVel;
+			comets[i2]->x += comets[i2]->xVel;
+			comets[i2]->y += comets[i2]->yVel;
 		}
 	}
 }

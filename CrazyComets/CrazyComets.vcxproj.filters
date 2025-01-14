@@ -24,12 +24,18 @@
     <ClCompile Include="comet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cometconf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="comet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cometconf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

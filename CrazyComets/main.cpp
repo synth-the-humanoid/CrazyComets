@@ -1,14 +1,14 @@
 #include <windows.h>
 #include "comet.h"
+#include "cometconf.h"
 
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 Renderer* renderer = new Renderer();
 
-// controls
-bool shouldClear = true;
-int cometCount = 10;
+// controls moved to cometconf.cpp
+
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
